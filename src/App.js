@@ -1,20 +1,50 @@
-import React from 'react';
-import './App.css';
+import React, { useCallback, useState } from "react";
+import "./App.css";
+
+function Tab({ children }) {
+  const [highlightStyle, setHighlightStyle] = useState({
+    left: 0,
+    opacity: 0,
+  });
+  const moveHighlight = (e) => {
+    // update highlight style to move highlight style
+
+    setHighlightStyle({
+      left: e.nativeEvent.layerX - 150,
+    });
+  };
+
+  const hideHighlight = (e) => {
+    setHighlightStyle({
+      opacity: 0,
+      left: e.nativeEvent.layerX - 150,
+    });
+  };
+
+  return (
+    <div className="tab" onMouseOut={hideHighlight} onMouseMove={moveHighlight}>
+      <div className="highlight" style={highlightStyle} />
+      {children}
+    </div>
+  );
+}
 
 function App() {
   return (
     <div className="app">
       <div className="browser">
         <div className="tabs">
-          <div className="tab">
+          <Tab>
             <a>Home</a>
-          </div>
-          <div className="tab">
+          </Tab>
+
+          <Tab>
             <a>About</a>
-          </div>
-          <div className="tab">
-            <a>Features</a>
-          </div>
+          </Tab>
+
+          <Tab>
+            <a>Feautres</a>
+          </Tab>
         </div>
 
         <div className="viewport">Pages Go Here</div>
