@@ -9,11 +9,9 @@ export default function Router() {
     <Switch>
       <Route path="/about">
         <About />
-        <Home />
       </Route>
       <Route path="/features">
         <Features />
-        <Home />
       </Route>
       <Route path="/" exact={true}>
         <Home />
