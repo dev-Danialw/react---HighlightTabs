@@ -1,55 +1,60 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  NavLink,
+} from "react-router-dom";
+import Tab from "./components/Tab";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Features from "./pages/Features";
+
 import "./App.css";
-
-function Tab({ children }) {
-  const [highlightStyle, setHighlightStyle] = useState({
-    left: 0,
-    opacity: 0,
-  });
-  const moveHighlight = (e) => {
-    // update highlight style to move highlight style
-
-    setHighlightStyle({
-      left: e.nativeEvent.layerX - 150,
-    });
-  };
-
-  const hideHighlight = (e) => {
-    setHighlightStyle({
-      opacity: 0,
-      left: e.nativeEvent.layerX - 150,
-    });
-  };
-
-  return (
-    <div className="tab" onMouseOut={hideHighlight} onMouseMove={moveHighlight}>
-      <div className="highlight" style={highlightStyle} />
-      {children}
-    </div>
-  );
-}
 
 function App() {
   return (
-    <div className="app">
-      <div className="browser">
-        <div className="tabs">
-          <Tab>
-            <a>Home</a>
-          </Tab>
+    <Router>
+      <div className="app">
+        <div className="browser">
+          <div className="tabs">
+            <Tab>
+              <NavLink to="/" exact={true} activeClassName="is-active">
+                Home
+              </NavLink>
+            </Tab>
 
-          <Tab>
-            <a>About</a>
-          </Tab>
+            <Tab>
+              <NavLink to="/about" activeClassName="is-active">
+                About
+              </NavLink>
+            </Tab>
 
-          <Tab>
-            <a>Feautres</a>
-          </Tab>
+            <Tab>
+              <NavLink to="/features" activeClassName="is-active">
+                Feautres
+              </NavLink>
+            </Tab>
+          </div>
+
+          <div className="viewport">
+            <Switch>
+              <Route path="/about">
+                <About />
+                <Home />
+              </Route>
+              <Route path="/features">
+                <Features />
+                <Home />
+              </Route>
+              <Route path="/" exact={true}>
+                <Home />
+              </Route>
+            </Switch>
+          </div>
         </div>
-
-        <div className="viewport">Pages Go Here</div>
       </div>
-    </div>
+    </Router>
   );
 }
 
